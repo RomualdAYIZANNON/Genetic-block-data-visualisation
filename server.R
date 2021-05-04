@@ -3,17 +3,11 @@ library(tibble)
 library(ggplot2)
 library(FactoMineR)
 library(factoextra)
-
-
 server <- function(input, output, session) {
-  
-  df0 <- reactive({
+    df0 <- reactive({
     dataset %>%
-      dplyr::filter(Seasons %in% input$Seasons)
-      
-           
-  })
-  
+      dplyr::filter(Seasons %in% input$Seasons)             
+  }) 
   output$Trials <- renderUI({
     
     df0() 
@@ -48,8 +42,6 @@ server <- function(input, output, session) {
       dplyr::filter(Orgen %in% input$Orgen)
     
   })
-  
-  
   
   filtered_data<-reactive({
     
@@ -113,18 +105,12 @@ filtered_table<-reactive({
   #Table
   
 output$Table <-renderDataTable( filtered_table())
-                                 
-                                    
-  
-  #plot
-
-    
+                                                                
+  #plot 
     output$myplot <- renderPlot({
-    
-      
+       
       if (length(input$Variabls)==1) {
-
-        
+   
         p<-ggplot(selected_data(), aes(x=Orgen, y=(!!!input$Variabls)))+
           geom_boxplot(colour=rainbow(n=length(input$Orgen)))+
           stat_summary(fun=mean, colour="black", geom="point", shape=18, size=3)
@@ -143,8 +129,7 @@ output$Table <-renderDataTable( filtered_table())
        facet_grid( ,,.~(!!!q) , scales="free", space = "free")
         
         print(p2)
-        
-        
+         
       }
       
       width = "auto"
@@ -152,21 +137,15 @@ output$Table <-renderDataTable( filtered_table())
       res = 100
       })
     
-    
-    
     output$mypca <- renderPlot({
       
-     
-     
-    
     res.pca<-PCA(pca_data(),scale.unit=TRUE, ncp=2,axes=c(1,2),graph=FALSE)
     
    bm<-factoextra::fviz_pca_biplot(res.pca,
                     repel = TRUE,
                       col.var = "#006400", 
                       col.ind = "#FF3030",
-                    cex = 0.7)
-                 
+                    cex = 0.7)          
                     
       print(bm)
       
@@ -174,13 +153,8 @@ output$Table <-renderDataTable( filtered_table())
       height = "auto"
       res = 100
     })
-    
-    
     output$mypca2 <- renderPlot({
-      
-    
-      
-      
+        
       res.pca<-PCA(pca_data(),scale.unit=TRUE, ncp=3,axes=c(1,3),graph=FALSE)
       
       
@@ -189,15 +163,13 @@ output$Table <-renderDataTable( filtered_table())
                                       repel = TRUE,
                                       col.var = "#006400", 
                                       col.ind = "#FF3030",
-                                      cex = 0.7)
-      
-      
+                                      cex = 0.7)  
       print(bm)
       
       width = "auto"
       height = "auto"
       res = 100
-    })
+  })
 
 output$mycluster<-renderPlot({
   
@@ -210,12 +182,10 @@ output$mycluster<-renderPlot({
   
   width = "auto"
   height = "auto"
-  res = 100
-  
-  
+  res = 100 
 })
 
-  }   
+}   
       
 # Run the application 
 
