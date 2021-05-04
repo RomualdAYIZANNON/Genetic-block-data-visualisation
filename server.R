@@ -187,5 +187,5 @@ output$mycluster<-renderPlot({
 
 }   
       
-# Run the application 
+ 
 
