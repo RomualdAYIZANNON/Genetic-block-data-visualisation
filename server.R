@@ -28,7 +28,6 @@ server <- function(input, output, session) {
     
   })
   
-  
   ffdata2 <-reactive({ ddff0()|> 
      
       dplyr::select(Trials,
@@ -40,9 +39,6 @@ server <- function(input, output, session) {
       group_by(Ages, Trials, Orgen)|>
       
       summarise_if(is.numeric, mean, na.rm = TRUE)
-  
-    
-    
     
   })
   
@@ -115,8 +111,6 @@ server <- function(input, output, session) {
     
       
   })
-  
-  
   df0 <- reactive({
     dataset |>
       dplyr::filter(Seasons %in% input$Seasons)
@@ -156,8 +150,6 @@ server <- function(input, output, session) {
       dplyr::filter(Orgen %in% input$Orgen)
     
   })
-  
-  
   filtered_data<-reactive({
     
     df2() |>
@@ -265,8 +257,7 @@ server <- function(input, output, session) {
     print(p)
   
   })
-  
-  
+ 
   output$lineplots2 <- renderPlot({
     
     req(ddff1()!=0)
@@ -277,7 +268,6 @@ server <- function(input, output, session) {
     col=sample(color,n,replace = TRUE)
     p<-ggplot(ddff1(), mapping=aes(x=Ages, y=ddff1()[[input$Variabll]], 
                                      colour=Orgen))+
-      
       geom_line(linewidth=0.8)+ 
       scale_size_area()+
       scale_x_continuous(limits = c(3,11), expand = c(0, 0))+
@@ -325,8 +315,6 @@ server <- function(input, output, session) {
   output$myCTest2 <- DT::renderDataTable({
     
     req(ffdata()!=0)
-    
-    
     
     if (input$Normality) {
       
@@ -442,7 +430,7 @@ server <- function(input, output, session) {
             mymat[row.names(mymat)==rn[int],colnames(mymat)==cn[ext]]<-x[row.names(x)==rn[int],colnames(x)==cn[ext]]
             mymat[row.names(mymat)==cn[ext],colnames(mymat)==rn[int]]<-x[row.names(x)==rn[int],colnames(x)==cn[ext]]
           }
-          
+         
         }
         return(mymat)
       }
@@ -473,14 +461,8 @@ server <- function(input, output, session) {
         theme(legend.position="none")+
         theme(axis.text.x = element_text(angle=90, hjust=0.5, vjust=0.5))+ 
         scale_colour_manual(values = col)
-       
-      
-    }
-    
-    
+    }  
   })
-  
-  
   output$myplot <- renderPlot({
     req(selected_data()!=0)
     
@@ -502,14 +484,10 @@ server <- function(input, output, session) {
       
 
       print(p)
-      
-      
     }
     
     else if(length(input$Seasons)>1) {
-      
-      
-      
+       
      p2<- ggplot(selected_data(), mapping=aes(x=Orgen,  y=(!!!input$Variabls),fill=Orgen))+
         geom_boxplot(position = position_dodge(1))+
        scale_size_area()+
@@ -520,14 +498,10 @@ server <- function(input, output, session) {
         xlab("Orgens")+
        scale_x_discrete()+
         ylab(paste0(input$Variabls))
-      
-    
   
       print(p2) 
       
-    }
-    
-    
+    } 
   })
   
   output$mypca <- renderPlot({
@@ -542,9 +516,7 @@ server <- function(input, output, session) {
                                     col.ind = "#FF3030",
                                     cex = 0.7)
     print(bm)
-    
-    
-  })
+ })
   
   output$mypca2 <- renderPlot({
     req(pca_data()!=0)
