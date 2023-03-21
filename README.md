@@ -9,5 +9,7 @@ The current revolution in the world of programming offers a large number of tool
 **Keywords**: Statistical analysis, R-Shiny, genetic selection, oil palm.
 
 
-
-##Application interface description##
+## Application interface description ##
+The application interface is organized into four navigation panels which carries each a specific sidebar. The sidebares provide the parameters that are visualized and displayed on the main panel. The navigation through the panels done thanks to the Menubar.
+The interface in available in both the Green, light and dark mode. The two latter require internet access. Since the dark mode is been done using the package shinyDarkmode. 
+The four navigation panels are as follow:
